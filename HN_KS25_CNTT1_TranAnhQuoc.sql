@@ -28,13 +28,16 @@ create table book_order (
 
 -- them cot
 alter table book
-add column authour_name varchar(100) not null;
+add column author_name varchar(100) not null;
+
 -- sua kieu du lieu 
 alter table book_order
 modify column customer_name varchar(200);
+
 -- them rang buoc
 alter table book_order
-modify column delivery date check (delivery >= order_date);
+add constraint check_delivery_date 
+check (delivery_date >= order_date);
 
 
 insert into category (category_name, description)
@@ -62,7 +65,7 @@ where category_id = 1;
 
 update book_order
 set delivery_date = '2025-12-31'
-where delivery is null;
+where delivery_date is null;
 
 delete from book_order
 where order_date < '2025-02-01';
@@ -77,3 +80,15 @@ from book as b
 inner join category as c
 on b.category_id = c.category_id;
 
+select title, author_name,
+	case
+		when status = 1 then 'Còn hàng'
+        when status = 0 then 'Hết hàng'
+	end as status_name
+from book;
+
+select title, category_id
+from book 
+group by title, category_id
+having category_id > 2;
+	
