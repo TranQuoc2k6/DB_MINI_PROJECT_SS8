@@ -92,3 +92,4 @@ from book
 group by title, category_id
 having category_id > 2;
 	
+
